@@ -3,10 +3,10 @@ library(ggtext)
 library(patchwork)
 library(glue)
 library(ggtext)
-setwd("/Users/takayukitamura/Documents/R_Computing/house_prices")
+setwd("/Users/takayukitamura/Documents/R_Computing/tech_city_house_price_index")
 
 # upload house_px file
-tech_house_index <- read.csv("/Users/takayukitamura/Documents/R_Computing/house_prices/tech_city_house_price_index.csv", sep = ",", 
+tech_house_index <- read.csv("/Users/takayukitamura/Documents/R_Computing/tech_city_house_price_index/tech_city_house_price_index.csv", sep = ",", 
                         header = TRUE, stringsAsFactors = FALSE ) 
 
 tail(tech_house_index)
@@ -42,3 +42,5 @@ ggplot(data = tech_house_index_long, aes(x = date, y = price, color = city)) +
     plot.caption = element_markdown(color = "grey", size = 7)
   ) +
   theme_minimal()
+
+ggsave("tech_city_house_index.png", width = 6.5, height = 5)
