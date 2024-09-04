@@ -11,6 +11,11 @@ tech_house_index <- read.csv("/Users/takayukitamura/Documents/R_Computing/tech_c
 
 tail(tech_house_index)
 
+updates <- tribble(~date, ~KansasCity, ~Seattle, ~SanJose, ~SanFrancisco, ~Austin, ~Pittsburgh, ~Boston,
+        "2024-04-01", 355.29, 540.76, 564.33, 505.18, 519.41, 312.96, 471.74)  
+
+tech_house_index <- rbind(tech_house_index, updates)
+
 # Convert 'date' column to Date format if it's not already
 tech_house_index$date <- as.Date(tech_house_index$date)
 
@@ -22,7 +27,7 @@ tail(tech_house_index)
 tech_house_index_long <- pivot_longer(tech_house_index, cols = -date, names_to = "city", values_to = "price")
 
 # Get the latest price for each city
-latest_prices <- aggregate(price ~ city, data = tech_house_index_long[tech_house_index_long$date == as.Date("2024-01-01"), ], max)
+latest_prices <- aggregate(price ~ city, data = tech_house_index_long[tech_house_index_long$date == as.Date("2024-04-01"), ], max)
 
 # Reorder the levels of 'city' based on the latest price
 tech_house_index_long$city <- factor(tech_house_index_long$city, levels = latest_prices[order(latest_prices$price, decreasing = TRUE), "city"])
