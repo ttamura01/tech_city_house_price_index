@@ -3,6 +3,7 @@ library(ggtext)
 library(patchwork)
 library(glue)
 library(ggtext)
+
 setwd("/Users/takayukitamura/Documents/R_Computing/tech_city_house_price_index")
 
 # upload house_px file
@@ -29,12 +30,12 @@ tech_house_index_long <- pivot_longer(tech_house_index, cols = -date, names_to =
 # Get the latest price for each city
 latest_prices <- aggregate(price ~ city, data = tech_house_index_long[tech_house_index_long$date == as.Date("2024-04-01"), ], max)
 
-# Reorder the levels of 'city' based on the latest price
+# Reorder the levels of 'city' based on the latest price 
 tech_house_index_long$city <- factor(tech_house_index_long$city, levels = latest_prices[order(latest_prices$price, decreasing = TRUE), "city"])
 
 # Plot the data with ggplot
 
-ggplot(data = tech_house_index_long, aes(x = date, y = price, color = city)) +
+a <- ggplot(data = tech_house_index_long, aes(x = date, y = price, color = city)) +
   geom_line() +
   labs(title = "Historical House Prices Index in US major technology cities",
        subtitle = "(house price of 1995-01-01 = 100)",
@@ -45,7 +46,8 @@ ggplot(data = tech_house_index_long, aes(x = date, y = price, color = city)) +
     legend.title = element_blank(),
     legend.key = element_blank(),
     plot.caption = element_markdown(color = "grey", size = 7)
-  ) +
-  theme_minimal()
+  ) 
 
 ggsave("tech_city_house_index.png", width = 6.5, height = 5)
+
+
